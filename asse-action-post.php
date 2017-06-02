@@ -1,26 +1,23 @@
 <?php
 
-// @codingStandardsIgnoreFile
+defined( 'ABSPATH' ) || exit;
 
-use Asse\Plugin\AsseHelpers\HelperFactory;
+Class Asse_Post {
 
-/**
- * Sets the GUID after post was imported.
- *
- * @wp-hook save_post
- * @wp-hook edit_attachment
- * @wp-hook add_attachment
- * @param $postId
- * @return mixed
- */
-function setPostGuid($postId)
-{
-    global $wpdb;
-    $where = array('ID' => $postId);
-    $wpdb->update($wpdb->posts, array('guid' => $postId), $where);
+    public function __construct() {
+        add_action( 'save_post', array( $this, 'set_post_guid' ) );
+        add_action( 'edit_attachment', array( $this, 'set_post_guid' ) );
+        add_action( 'add_attachment', array( $this, 'set_post_guid' ) );
+    }
 
-    return $postId;
+    public function set_post_guid( $post_id ) {
+        global $wpdb;
+        $where = array( 'ID' => $post_id );
+        $wpdb->update( $wpdb->posts, array( 'guid' => $post_id) , $where );
+
+        return $post_id;
+    }
+
 }
-add_action('save_post', 'setPostGuid');
-add_action('edit_attachment', 'setPostGuid');
-add_action('add_attachment', 'setPostGuid');
+
+$asse_post = new Asse_Post();
