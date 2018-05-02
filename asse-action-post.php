@@ -2,7 +2,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-Class Asse_Post {
+Class Axelspringer_Post {
 
     public function __construct() {
         add_action( 'save_post', array( $this, 'set_post_guid' ) );
@@ -20,4 +20,4 @@ Class Asse_Post {
 
 }
 
-$asse_post = new Asse_Post();
+$axelspringer_post = new Axelspringer_Post();
